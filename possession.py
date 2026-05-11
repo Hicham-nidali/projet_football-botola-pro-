@@ -13,7 +13,7 @@ class Possession:
         self.equipe = equipe
         self.actions = []
         self.gagnee = False
-        self.perdue = False
+        self.perdue = True    # ← par défaut perdue, pas False !
 
     # Ajouter une action (max 5)
     def ajouter_action(self, action):

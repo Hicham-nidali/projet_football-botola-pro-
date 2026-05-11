@@ -29,10 +29,11 @@ class Joueur:
     def get_xg(self):
         return self.xg
 
-    # Setter xg avec validation (0 <= xg <= 1)
+    # Setter xG — additionne au lieu de remplacer
+    # Un joueur accumule ses xG sur toutes ses actions
     def set_xg(self, valeur):
         if 0 <= valeur <= 1:
-            self.xg = valeur
+            self.xg = self.xg + valeur   # ← on additionne !
 
     # Setter vaep
     def set_vaep(self, valeur):
@@ -40,4 +41,5 @@ class Joueur:
 
     # Méthode d'affichage
     def afficher(self):
-        print(f"Joueur : {self.nom} | Equipe : {self.equipe} | xG : {self.xg:.3f} | VAEP : {self.vaep:.3f}")
+        print(f"Joueur : {self.nom} | Equipe : {self.equipe} | "
+              f"xG : {self.xg:.3f} | VAEP : {self.vaep:.3f}")

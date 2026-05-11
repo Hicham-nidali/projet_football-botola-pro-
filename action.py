@@ -79,22 +79,30 @@ class Action:
         if k < 2:
             self.vaep = 0.0
             return self.vaep
-        p_marquer = 0.0
-        p_encaisser = 0.0
+
+        somme_xg = 0.0
+        nb_buts_adversaire = 0
+
         for a in actions:
-            if a.marquer_but:
-                p_marquer = p_marquer + 1
-            if not a.gagner_possession:
-                p_encaisser = p_encaisser + 1
-        p_marquer = p_marquer / k
-        p_encaisser = p_encaisser / k
+            somme_xg = somme_xg + a.xg
+            if not a.gagner_possession and a.xg > 0:
+                nb_buts_adversaire = nb_buts_adversaire + 1
+
+        p_marquer = somme_xg / k
+        p_encaisser = nb_buts_adversaire / k
         self.vaep = p_marquer - p_encaisser
         return self.vaep
 
     # Méthode d'affichage
     def afficher(self):
-        print(f"Action : {self.type_action} | Corps : {self.partie_corps} | "
-              f"Joueur : {self.joueur.get_nom()} | Minute : {self.minute} | "
-              f"Résultat : {self.resultat} | xG : {self.xg:.3f} | "
-              f"DXG : {self.dxg:.3f} | XT : {self.xt:.4f} | "
-              f"DXT : {self.dxt:.4f} | VAEP : {self.vaep:.4f}")
+        print(f"\n  Action   : {self.type_action}")
+        print(f"  Corps    : {self.partie_corps}")
+        print(f"  Joueur   : {self.joueur.get_nom()}")
+        print(f"  Minute   : {self.minute}")
+        print(f"  Résultat : {self.resultat}")
+        print(f"  xG       : {self.xg:.4f}")
+        print(f"  DXG      : {self.dxg:.4f}")
+        print(f"  XT       : {self.xt:.4f}")
+        print(f"  DXT      : {self.dxt:.4f}")
+        print(f"  VAEP     : {self.vaep:.4f}")
+        print(f"  {'-'*40}")

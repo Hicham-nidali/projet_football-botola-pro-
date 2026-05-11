@@ -193,6 +193,14 @@ for num, poss in possessions.items():
     k = len(actions)
 
     if k < 2:
+        poss.gagnee = False
+        for a in actions:
+            if a.gagner_possession:
+                poss.gagnee = True
+        if poss.gagnee:
+            poss.perdue = False
+        else:
+            poss.perdue = True
         continue
 
     # Calculer DXG (différence xG entre actions consécutives)
@@ -215,8 +223,15 @@ for num, poss in possessions.items():
         )
 
     # Marquer la possession gagnée ou perdue
-    poss.gagnee = any(a.gagner_possession for a in actions)
-    poss.perdue = not poss.gagnee
+    if len(actions) >= 1:
+        poss.gagnee = False
+        for a in actions:
+            if a.gagner_possession:
+                poss.gagnee = True
+        if poss.gagnee:
+            poss.perdue = False
+        else:
+            poss.perdue = True
 
 print("✓ DXG, DXT et VAEP calculés pour toutes les possessions")
 
@@ -334,9 +349,14 @@ while continuer:
 
     # ----------------------------------------------------------
     elif choix == "4":
-        print("\n--- Top 10 possessions par VAEP ---")
+        print("\n--- Top 10 possessions par VAEP (k >= 2 actions) ---")
+        possessions_valides = []
+        for p in possessions.values():
+            if p.nb_actions() >= 2:
+                possessions_valides.append(p)
+
         possessions_triees = sorted(
-            possessions.values(),
+            possessions_valides,
             key=lambda p: p.calculer_vaep_possession(),
             reverse=True
         )

@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚽ FUS Rabat vs FAR Rabat — Botola Maroc Pro</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&family=Barlow+Condensed:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --bg:        #060b14;
+  --bg2:       #0c1526;
+  --bg3:       #111e35;
+  --card:      #0f1d32;
+  --border:    #1e3055;
+  --green:     #00e676;
+  --green2:    #00c853;
+  --gold:      #ffd600;
+  --red:       #ff1744;
+  --blue:      #40c4ff;
+  --purple:    #e040fb;
+  --white:     #f0f4ff;
+  --grey:      #8899bb;
+  --fus:       #006400;
+  --far:       #8b0000;
+  --fus-light: #00e676;
+  --far-light: #ff5252;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background: var(--bg);
+  color: var(--white);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── PITCH BACKGROUND ── */
+body::before {
+  content:'';
+  position:fixed; inset:0; z-index:0;
+  background:
+    repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(0,230,118,.04) 60px),
+    repeating-linear-gradient(0deg,  transparent, transparent 59px, rgba(0,230,118,.04) 60px),
+    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,100,0,.12) 0%, transparent 70%),
+    linear-gradient(180deg, #060b14 0%, #060f1a 100%);
+  pointer-events:none;
+}
+
+/* ── HEADER ── */
+.header {
+  position:relative; z-index:10;
+  background: linear-gradient(180deg, rgba(0,0,0,.95) 0%, rgba(6,11,20,.9) 100%);
+  border-bottom: 2px solid var(--green);
+  padding: 0;
+}
+
+.scoreboard {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 18px 40px 14px;
+  gap: 20px;
+}
+
+.team-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.team-header.right { align-items: flex-end; }
+
+.team-badge {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; font-weight: 700;
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 1px;
+  border: 2px solid;
+  flex-shrink: 0;
+}
+.badge-fus { background: rgba(0,100,0,.3); border-color: var(--fus-light); color: var(--fus-light); }
+.badge-far { background: rgba(139,0,0,.3); border-color: var(--far-light); color: var(--far-light); }
+
+.team-row { display: flex; align-items: center; gap: 12px; }
+.team-row.right { flex-direction: row-reverse; }
+
+.team-name {
+  font-family: 'Oswald', sans-serif;
+  font-size: 22px; font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.team-name.fus { color: var(--fus-light); }
+.team-name.far { color: var(--far-light); }
+
+.team-sub { font-size: 12px; color: var(--grey); letter-spacing: 1px; text-transform: uppercase; }
+
+.score-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.score-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.score-num {
+  font-family: 'Oswald', sans-serif;
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: 0 0 30px currentColor;
+}
+.score-num.fus { color: var(--fus-light); }
+.score-num.far { color: var(--far-light); }
+
+.score-sep {
+  font-family: 'Oswald', sans-serif;
+  font-size: 36px;
+  color: var(--grey);
+  font-weight: 300;
+}
+
+.match-info {
+  font-size: 11px;
+  color: var(--grey);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.live-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  background: var(--green);
+  border-radius: 50%;
+  margin-right: 6px;
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+
+/* ── STATS BAR ── */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--border);
+}
+.stat-item {
+  padding: 10px 16px;
+  text-align: center;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.stat-item:last-child { border-right: none; }
+.stat-val { font-family:'Oswald',sans-serif; font-size:20px; font-weight:600; }
+.stat-val.green  { color: var(--green); }
+.stat-val.gold   { color: var(--gold); }
+.stat-val.blue   { color: var(--blue); }
+.stat-val.purple { color: var(--purple); }
+.stat-lbl { font-size:11px; color:var(--grey); letter-spacing:1px; text-transform:uppercase; margin-top:2px; }
+
+/* ── NAV ── */
+.nav {
+  position:relative; z-index:10;
+  display: flex;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  gap: 4px;
+  overflow-x: auto;
+}
+.nav-btn {
+  padding: 14px 20px;
+  background: none;
+  border: none;
+  color: var(--grey);
+  font-family: 'Oswald', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.nav-btn:hover { color: var(--white); border-bottom-color: rgba(0,230,118,.4); }
+.nav-btn.active { color: var(--green); border-bottom-color: var(--green); }
+
+/* ── MAIN ── */
+.main {
+  position: relative; z-index:5;
+  padding: 30px 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.view { display: none; }
+.view.active { display: block; }
+
+/* ── SECTION TITLE ── */
+.section-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-title::after {
+  content:'';
+  flex:1;
+  height:1px;
+  background: linear-gradient(90deg, var(--border), transparent);
+}
+
+/* ── PITCH GRID ── */
+.pitch-container {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.pitch-divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding-top: 20px;
+}
+.pitch-line {
+  width: 2px;
+  height: 100%;
+  min-height: 400px;
+  background: linear-gradient(180deg, transparent, var(--border), var(--border), transparent);
+}
+.pitch-circle {
+  width: 40px; height: 40px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+/* ── PLAYER CARD ── */
+.players-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.player-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all .2s;
+  position: relative;
+  overflow: hidden;
+}
+.player-card::before {
+  content:'';
+  position:absolute;
+  left:0; top:0; bottom:0;
+  width:3px;
+}
+.player-card.fus::before { background: var(--fus-light); }
+.player-card.far::before { background: var(--far-light); }
+.player-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0,230,118,.4);
+  box-shadow: 0 8px 24px rgba(0,0,0,.4);
+}
+.player-card.selected {
+  border-color: var(--green);
+  box-shadow: 0 0 20px rgba(0,230,118,.2);
+}
+
+.player-card-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.player-avatar {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Oswald', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.avatar-fus { background: rgba(0,230,118,.15); color: var(--fus-light); border: 1px solid rgba(0,230,118,.3); }
+.avatar-far { background: rgba(255,82,82,.15); color: var(--far-light); border: 1px solid rgba(255,82,82,.3); }
+
+.player-info { flex: 1; min-width: 0; }
+.player-name {
+  font-family: 'Oswald', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: .5px;
+}
+.player-pos { font-size: 11px; color: var(--grey); }
+
+.player-xg-badge {
+  font-family: 'Oswald', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(255,214,0,.1);
+  color: var(--gold);
+  border: 1px solid rgba(255,214,0,.2);
+}
+
+.player-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+.mini-stat {
+  text-align: center;
+  padding: 4px;
+  background: rgba(255,255,255,.03);
+  border-radius: 4px;
+}
+.mini-stat-val {
+  font-family: 'Oswald', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+}
+.mini-stat-lbl { font-size: 9px; color: var(--grey); text-transform: uppercase; letter-spacing: .5px; }
+
+/* ── DETAIL PANEL ── */
+.detail-panel {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-top: 20px;
+  display: none;
+}
+.detail-panel.show { display: block; }
+
+.detail-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.detail-avatar {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Oswald', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.detail-metrics {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.metric-box {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  text-align: center;
+}
+.metric-val {
+  font-family: 'Oswald', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.metric-lbl { font-size: 11px; color: var(--grey); text-transform: uppercase; letter-spacing: 1px; }
+
+/* ── TABLE ── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.data-table th {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--grey);
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg3);
+}
+.data-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(30,48,85,.5);
+}
+.data-table tr:hover td { background: rgba(0,230,118,.04); }
+.data-table tr.goal-row td { background: rgba(255,214,0,.07); }
+
+/* ── POSSESSION CARD ── */
+.poss-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all .2s;
+}
+.poss-card:hover { border-color: rgba(0,230,118,.4); transform: translateX(4px); }
+.poss-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.poss-num {
+  font-family: 'Oswald', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--grey);
+}
+.vaep-badge {
+  font-family: 'Oswald', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+.vaep-pos { background: rgba(0,230,118,.15); color: var(--green); border: 1px solid rgba(0,230,118,.3); }
+.vaep-neg { background: rgba(255,23,68,.1); color: var(--red); border: 1px solid rgba(255,23,68,.2); }
+.vaep-neu { background: rgba(136,153,187,.1); color: var(--grey); border: 1px solid rgba(136,153,187,.2); }
+
+.poss-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.act-chip {
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 500;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+.chip-pass   { background: rgba(64,196,255,.1);  color: var(--blue); }
+.chip-shot   { background: rgba(255,214,0,.1);   color: var(--gold); }
+.chip-drib   { background: rgba(224,64,251,.1);  color: var(--purple); }
+.chip-goal   { background: rgba(255,214,0,.2);   color: var(--gold); border: 1px solid rgba(255,214,0,.4); }
+
+/* ── GOAL CARD ── */
+.goal-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  padding-left: 40px;
+}
+.goal-timeline::before {
+  content:'';
+  position:absolute;
+  left:15px; top:0; bottom:0;
+  width:2px;
+  background: linear-gradient(180deg, var(--gold), var(--green));
+}
+.goal-item {
+  background: var(--card);
+  border: 1px solid rgba(255,214,0,.3);
+  border-radius: 8px;
+  padding: 14px 16px;
+  position: relative;
+}
+.goal-item::before {
+  content:'⚽';
+  position:absolute;
+  left:-32px; top:50%;
+  transform:translateY(-50%);
+  font-size:18px;
+  background: var(--bg);
+  padding: 2px;
+}
+.goal-min {
+  font-family:'Oswald',sans-serif;
+  font-size:28px;
+  font-weight:700;
+  color: var(--gold);
+  line-height:1;
+}
+.goal-player {
+  font-family:'Oswald',sans-serif;
+  font-size:17px;
+  font-weight:600;
+  margin-top:2px;
+}
+
+/* ── BAR CHART ── */
+.bar-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.bar-fus {
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, transparent, var(--fus-light));
+  transition: width .6s ease;
+}
+.bar-far {
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--far-light), transparent);
+  transition: width .6s ease;
+}
+.bar-label {
+  font-family:'Oswald',sans-serif;
+  font-size:11px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--grey);
+  text-align:center;
+  white-space:nowrap;
+}
+
+/* ── COMPARE ── */
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 16px;
+  align-items: start;
+}
+.compare-select {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--white);
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 14px;
+  width: 100%;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+.vs-badge {
+  font-family:'Oswald',sans-serif;
+  font-size:24px;
+  font-weight:700;
+  color:var(--grey);
+  text-align:center;
+  padding-top:50px;
+}
+.compare-result {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 16px;
+  display: none;
+}
+.compare-result.show { display: block; }
+.compare-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(30,48,85,.5);
+}
+.compare-val {
+  font-family:'Oswald',sans-serif;
+  font-size:18px;
+  font-weight:600;
+}
+.compare-val.left { text-align:right; }
+.compare-val.winner { color: var(--green); }
+.compare-metric-name {
+  font-size:11px;
+  color:var(--grey);
+  text-transform:uppercase;
+  letter-spacing:1px;
+  text-align:center;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .pitch-container { grid-template-columns:1fr; }
+  .pitch-divider { display:none; }
+  .scoreboard { grid-template-columns:1fr; text-align:center; }
+  .team-row.right { flex-direction:row; }
+  .detail-metrics { grid-template-columns:repeat(3,1fr); }
+  .main { padding:16px; }
+  .nav { padding:0 16px; }
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+.view.active { animation: fadeIn .25s ease; }
+
+.chip-type {
+  display:inline-block;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:10px;
+  padding:2px 7px;
+  border-radius:3px;
+  font-weight:600;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+}
+.chip-Shot { background:rgba(255,214,0,.15); color:var(--gold); }
+.chip-Pass { background:rgba(64,196,255,.15); color:var(--blue); }
+.chip-Dribble { background:rgba(224,64,251,.15); color:var(--purple); }
+.chip-Goal { background:rgba(255,214,0,.3); color:var(--gold); font-weight:700; }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="header">
+  <div class="scoreboard">
+    <div class="team-header">
+      <div class="team-row">
+        <div class="team-badge badge-fus" id="badgeFus">FUS</div>
+        <div>
+          <div class="team-name fus" id="nameFus">FUS Rabat</div>
+          <div class="team-sub">Botola Maroc Pro</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="score-center">
+      <div class="score-display">
+        <span class="score-num fus" id="scoreFus">0</span>
+        <span class="score-sep">—</span>
+        <span class="score-num far" id="scoreFar">0</span>
+      </div>
+      <div class="match-info">
+        <span class="live-dot"></span>Match Analysé
+      </div>
+      <div class="match-info" id="matchInfo">Chargement...</div>
+    </div>
+
+    <div class="team-header right">
+      <div class="team-row right">
+        <div class="team-badge badge-far" id="badgeFar">FAR</div>
+        <div style="text-align:right">
+          <div class="team-name far" id="nameFar">FAR Rabat</div>
+          <div class="team-sub">Botola Maroc Pro</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-bar" id="statsBar">
+    <div class="stat-item">
+      <div class="stat-val green" id="statPoss">—</div>
+      <div class="stat-lbl">Possessions</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val gold" id="statTirs">—</div>
+      <div class="stat-lbl">Tirs</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val blue" id="statJoueurs">—</div>
+      <div class="stat-lbl">Joueurs</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val purple" id="statActions">—</div>
+      <div class="stat-lbl">Actions</div>
+    </div>
+  </div>
+</header>
+
+<!-- ══ NAV ══ -->
+<nav class="nav">
+  <button class="nav-btn active" onclick="showView('terrain')">⚽ Terrain</button>
+  <button class="nav-btn" onclick="showView('buts')">🥅 Buts</button>
+  <button class="nav-btn" onclick="showView('tirs')">🎯 Tirs & XG</button>
+  <button class="nav-btn" onclick="showView('possessions')">🔄 Possessions</button>
+  <button class="nav-btn" onclick="showView('comparer')">⚖️ Comparer</button>
+  <button class="nav-btn" onclick="showView('equipes')">📊 Équipes</button>
+</nav>
+
+<!-- ══ MAIN ══ -->
+<div class="main">
+
+  <!-- VIEW: TERRAIN -->
+  <div class="view active" id="view-terrain">
+    <div class="section-title">Terrain — Cartes Joueurs</div>
+    <div class="pitch-container">
+
+      <!-- FUS -->
+      <div>
+        <div class="section-title" style="color:var(--fus-light)">
+          🟢 <span id="titleFus">FUS Rabat</span>
+        </div>
+        <div class="players-grid" id="playersFus"></div>
+      </div>
+
+      <!-- Séparateur terrain -->
+      <div class="pitch-divider">
+        <div class="pitch-line"></div>
+        <div class="pitch-circle">⚽</div>
+        <div class="pitch-line"></div>
+      </div>
+
+      <!-- FAR -->
+      <div>
+        <div class="section-title" style="color:var(--far-light)">
+          🔴 <span id="titleFar">FAR Rabat</span>
+        </div>
+        <div class="players-grid" id="playersFar"></div>
+      </div>
+    </div>
+
+    <!-- Détail joueur -->
+    <div class="detail-panel" id="detailPanel">
+      <div class="detail-header">
+        <div class="detail-avatar" id="detailAvatar"></div>
+        <div>
+          <div style="font-family:'Oswald',sans-serif;font-size:22px;font-weight:700" id="detailName"></div>
+          <div style="color:var(--grey);font-size:13px" id="detailSub"></div>
+        </div>
+      </div>
+      <div class="detail-metrics" id="detailMetrics"></div>
+      <div class="section-title" style="margin-top:8px">Actions du joueur</div>
+      <table class="data-table" id="detailActions">
+        <thead>
+          <tr>
+            <th>Min</th><th>Type</th><th>Corps</th><th>Résultat</th>
+            <th>XG</th><th>DXG</th><th>XT</th><th>DXT</th><th>VAEP</th>
+          </tr>
+        </thead>
+        <tbody id="detailActionsBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- VIEW: BUTS -->
+  <div class="view" id="view-buts">
+    <div class="section-title">Buts du Match</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:start">
+      <div>
+        <div id="goalTimeline" class="goal-timeline"></div>
+      </div>
+      <div>
+        <div class="section-title">Statistiques comparées</div>
+        <div id="teamBarsContainer"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW: TIRS -->
+  <div class="view" id="view-tirs">
+    <div class="section-title">Tirs avec XG > 0 — classés par danger</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>#</th><th>Joueur</th><th>Équipe</th><th>Min</th>
+          <th>Corps</th><th>Résultat</th><th>XG</th><th>DXG</th>
+          <th>XT</th><th>DXT</th><th>VAEP</th>
+        </tr>
+      </thead>
+      <tbody id="tirsBody"></tbody>
+    </table>
+  </div>
+
+  <!-- VIEW: POSSESSIONS -->
+  <div class="view" id="view-possessions">
+    <div class="section-title">Top 10 Possessions par VAEP</div>
+    <div id="possessionsList"></div>
+  </div>
+
+  <!-- VIEW: COMPARER -->
+  <div class="view" id="view-comparer">
+    <div class="section-title">Comparer deux joueurs</div>
+    <div class="compare-grid">
+      <div>
+        <div style="font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:2px;color:var(--green);margin-bottom:8px;text-transform:uppercase">Joueur 1</div>
+        <select class="compare-select" id="compareJ1" onchange="updateCompare()"></select>
+      </div>
+      <div class="vs-badge">VS</div>
+      <div>
+        <div style="font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:2px;color:var(--far-light);margin-bottom:8px;text-transform:uppercase">Joueur 2</div>
+        <select class="compare-select" id="compareJ2" onchange="updateCompare()"></select>
+      </div>
+    </div>
+    <div class="compare-result" id="compareResult"></div>
+  </div>
+
+  <!-- VIEW: ÉQUIPES -->
+  <div class="view" id="view-equipes">
+    <div class="section-title">Statistiques par équipe</div>
+    <div id="equipesContent"></div>
+  </div>
+
+</div>
+
+<script>
+
+const NOM_FUS = "FUS Rabat";
+const NOM_FAR = "FAR Rabat";
+const EQUIPES_STATS = {"FUS Rabat": {"nom": "FUS Rabat", "vaep_total": 1.503, "xg_total": 1.877, "buts": 1, "tirs": 15, "passes": 291, "nb_joueurs": 14}, "FAR Rabat": {"nom": "FAR Rabat", "vaep_total": -0.35, "xg_total": 1.139, "buts": 1, "tirs": 7, "passes": 504, "nb_joueurs": 15}};
+const JOUEURS_FUS   = [{"nom": "Reda Hajhouj", "equipe": "FUS Rabat", "xg": 0.9051, "vaep": 0.1864, "nb_actions": 19, "buts": 1, "tirs": 5, "passes": 13, "dribbles": 1}, {"nom": "Naoufel Zerhouni", "equipe": "FUS Rabat", "xg": 0.4131, "vaep": 0.2815, "nb_actions": 34, "buts": 0, "tirs": 3, "passes": 28, "dribbles": 3}, {"nom": "Anas Bach", "equipe": "FUS Rabat", "xg": 0.3503, "vaep": 0.1055, "nb_actions": 35, "buts": 0, "tirs": 2, "passes": 32, "dribbles": 1}, {"nom": "El Mehdi Karnass", "equipe": "FUS Rabat", "xg": 0.1024, "vaep": 0.367, "nb_actions": 43, "buts": 0, "tirs": 1, "passes": 38, "dribbles": 4}, {"nom": "Mountassir Lahtimi", "equipe": "FUS Rabat", "xg": 0.0472, "vaep": -0.1141, "nb_actions": 26, "buts": 0, "tirs": 1, "passes": 23, "dribbles": 2}, {"nom": "Youssef Limouri", "equipe": "FUS Rabat", "xg": 0.0413, "vaep": 0.0237, "nb_actions": 25, "buts": 0, "tirs": 1, "passes": 23, "dribbles": 1}, {"nom": "El Mehdi Moubarik", "equipe": "FUS Rabat", "xg": 0.0101, "vaep": 0.2682, "nb_actions": 35, "buts": 0, "tirs": 1, "passes": 34, "dribbles": 0}, {"nom": "Zakaria Azoud", "equipe": "FUS Rabat", "xg": 0.008, "vaep": 0.019, "nb_actions": 12, "buts": 0, "tirs": 1, "passes": 8, "dribbles": 3}, {"nom": "Lahcen Dahdouh", "equipe": "FUS Rabat", "xg": 0.0, "vaep": 0.0917, "nb_actions": 3, "buts": 0, "tirs": 0, "passes": 3, "dribbles": 0}, {"nom": "Soumaila Ouatarra", "equipe": "FUS Rabat", "xg": 0.0, "vaep": 0.0064, "nb_actions": 17, "buts": 0, "tirs": 0, "passes": 17, "dribbles": 0}, {"nom": "Saad Ait Khorsa", "equipe": "FUS Rabat", "xg": 0.0, "vaep": 0.0063, "nb_actions": 27, "buts": 0, "tirs": 0, "passes": 25, "dribbles": 2}, {"nom": "Ayoub Qasmi", "equipe": "FUS Rabat", "xg": 0.0, "vaep": 0.0053, "nb_actions": 20, "buts": 0, "tirs": 0, "passes": 20, "dribbles": 0}, {"nom": "Mahdi Benabid", "equipe": "FUS Rabat", "xg": 0.0, "vaep": 0.1731, "nb_actions": 26, "buts": 0, "tirs": 0, "passes": 26, "dribbles": 0}, {"nom": "Anis Mohamed Saltou", "equipe": "FUS Rabat", "xg": 0.0, "vaep": 0.0835, "nb_actions": 1, "buts": 0, "tirs": 0, "passes": 1, "dribbles": 0}];
+const JOUEURS_FAR   = [{"nom": "Edilson Alberto Monteiro Sanches Borges", "equipe": "FAR Rabat", "xg": 0.76, "vaep": -0.0891, "nb_actions": 60, "buts": 1, "tirs": 1, "passes": 59, "dribbles": 0}, {"nom": "Mohamed El Khaloui", "equipe": "FAR Rabat", "xg": 0.1465, "vaep": -0.0676, "nb_actions": 40, "buts": 0, "tirs": 3, "passes": 35, "dribbles": 2}, {"nom": "Abdelilah Amimi", "equipe": "FAR Rabat", "xg": 0.1275, "vaep": 0.0791, "nb_actions": 9, "buts": 0, "tirs": 1, "passes": 7, "dribbles": 1}, {"nom": "Ismail Khafi", "equipe": "FAR Rabat", "xg": 0.1047, "vaep": 0.0299, "nb_actions": 16, "buts": 0, "tirs": 2, "passes": 13, "dribbles": 1}, {"nom": "Omar Jerrari", "equipe": "FAR Rabat", "xg": 0.0, "vaep": 0.0161, "nb_actions": 37, "buts": 0, "tirs": 0, "passes": 36, "dribbles": 1}, {"nom": "Zakaria Fati", "equipe": "FAR Rabat", "xg": 0.0, "vaep": -0.0845, "nb_actions": 24, "buts": 0, "tirs": 0, "passes": 22, "dribbles": 2}, {"nom": "Mohamed Rabie Hrimat", "equipe": "FAR Rabat", "xg": 0.0, "vaep": -0.1977, "nb_actions": 59, "buts": 0, "tirs": 0, "passes": 57, "dribbles": 2}, {"nom": "Anouar Tarkhatt", "equipe": "FAR Rabat", "xg": 0.0, "vaep": 0.0176, "nb_actions": 69, "buts": 0, "tirs": 0, "passes": 69, "dribbles": 0}, {"nom": "Ayoub Lakred", "equipe": "FAR Rabat", "xg": 0.0, "vaep": 0.0077, "nb_actions": 38, "buts": 0, "tirs": 0, "passes": 38, "dribbles": 0}, {"nom": "Hamza Moujahid", "equipe": "FAR Rabat", "xg": 0.0, "vaep": -0.0858, "nb_actions": 29, "buts": 0, "tirs": 0, "passes": 29, "dribbles": 0}, {"nom": "Mohamed Moufid", "equipe": "FAR Rabat", "xg": 0.0, "vaep": -0.0899, "nb_actions": 33, "buts": 0, "tirs": 0, "passes": 32, "dribbles": 1}, {"nom": "Mohamed Chibi", "equipe": "FAR Rabat", "xg": 0.0, "vaep": 0.0898, "nb_actions": 50, "buts": 0, "tirs": 0, "passes": 46, "dribbles": 4}, {"nom": "Brahim Sabaouni", "equipe": "FAR Rabat", "xg": 0.0, "vaep": 0.0077, "nb_actions": 34, "buts": 0, "tirs": 0, "passes": 34, "dribbles": 0}, {"nom": "Emmanuel Imanishimwe", "equipe": "FAR Rabat", "xg": 0.0, "vaep": 0.0016, "nb_actions": 23, "buts": 0, "tirs": 0, "passes": 23, "dribbles": 0}, {"nom": "Abdou Atchabao", "equipe": "FAR Rabat", "xg": 0.0, "vaep": 0.0153, "nb_actions": 4, "buts": 0, "tirs": 0, "passes": 4, "dribbles": 0}];
+const TOUS_JOUEURS  = {"Reda Hajhouj": {"nom": "Reda Hajhouj", "equipe": "FUS Rabat", "xg": 0.9051, "vaep": 0.1864, "nb_actions": 19, "buts": 1, "tirs": 5, "passes": 13, "dribbles": 1}, "Edilson Alberto Monteiro Sanches Borges": {"nom": "Edilson Alberto Monteiro Sanches Borges", "equipe": "FAR Rabat", "xg": 0.76, "vaep": -0.0891, "nb_actions": 60, "buts": 1, "tirs": 1, "passes": 59, "dribbles": 0}, "Anas Bach": {"nom": "Anas Bach", "equipe": "FUS Rabat", "xg": 0.3503, "vaep": 0.1055, "nb_actions": 35, "buts": 0, "tirs": 2, "passes": 32, "dribbles": 1}, "Naoufel Zerhouni": {"nom": "Naoufel Zerhouni", "equipe": "FUS Rabat", "xg": 0.4131, "vaep": 0.2815, "nb_actions": 34, "buts": 0, "tirs": 3, "passes": 28, "dribbles": 3}, "Abdelilah Amimi": {"nom": "Abdelilah Amimi", "equipe": "FAR Rabat", "xg": 0.1275, "vaep": 0.0791, "nb_actions": 9, "buts": 0, "tirs": 1, "passes": 7, "dribbles": 1}, "El Mehdi Karnass": {"nom": "El Mehdi Karnass", "equipe": "FUS Rabat", "xg": 0.1024, "vaep": 0.367, "nb_actions": 43, "buts": 0, "tirs": 1, "passes": 38, "dribbles": 4}, "Mohamed El Khaloui": {"nom": "Mohamed El Khaloui", "equipe": "FAR Rabat", "xg": 0.1465, "vaep": -0.0676, "nb_actions": 40, "buts": 0, "tirs": 3, "passes": 35, "dribbles": 2}, "Ismail Khafi": {"nom": "Ismail Khafi", "equipe": "FAR Rabat", "xg": 0.1047, "vaep": 0.0299, "nb_actions": 16, "buts": 0, "tirs": 2, "passes": 13, "dribbles": 1}, "Mountassir Lahtimi": {"nom": "Mountassir Lahtimi", "equipe": "FUS Rabat", "xg": 0.0472, "vaep": -0.1141, "nb_actions": 26, "buts": 0, "tirs": 1, "passes": 23, "dribbles": 2}, "Youssef Limouri": {"nom": "Youssef Limouri", "equipe": "FUS Rabat", "xg": 0.0413, "vaep": 0.0237, "nb_actions": 25, "buts": 0, "tirs": 1, "passes": 23, "dribbles": 1}, "El Mehdi Moubarik": {"nom": "El Mehdi Moubarik", "equipe": "FUS Rabat", "xg": 0.0101, "vaep": 0.2682, "nb_actions": 35, "buts": 0, "tirs": 1, "passes": 34, "dribbles": 0}, "Lahcen Dahdouh": {"nom": "Lahcen Dahdouh", "equipe": "FUS Rabat", "xg": 0.0, "vaep": 0.0917, "nb_actions": 3, "buts": 0, "tirs": 0, "passes": 3, "dribbles": 0}, "Omar Jerrari": {"nom": "Omar Jerrari", "equipe": "FAR Rabat", "xg": 0.0, "vaep": 0.0161, "nb_actions": 37, "buts": 0, "tirs": 0, "passes": 36, "dribbles": 1}, "Zakaria Fati": {"nom": "Zakaria Fati", "equipe": "FAR Rabat", "xg": 0.0, "vaep": -0.0845, "nb_actions": 24, "buts": 0, "tirs": 0, "passes": 22, "dribbles": 2}, "Mohamed Rabie Hrimat": {"nom": "Mohamed Rabie Hrimat", "equipe": "FAR Rabat", "xg": 0.0, "vaep": -0.1977, "nb_actions": 59, "buts": 0, "tirs": 0, "passes": 57, "dribbles": 2}, "Anouar Tarkhatt": {"nom": "Anouar Tarkhatt", "equipe": "FAR Rabat", "xg": 0.0, "vaep": 0.0176, "nb_actions": 69, "buts": 0, "tirs": 0, "passes": 69, "dribbles": 0}, "Ayoub Lakred": {"nom": "Ayoub Lakred", "equipe": "FAR Rabat", "xg": 0.0, "vaep": 0.0077, "nb_actions": 38, "buts": 0, "tirs": 0, "passes": 38, "dribbles": 0}, "Hamza Moujahid": {"nom": "Hamza Moujahid", "equipe": "FAR Rabat", "xg": 0.0, "vaep": -0.0858, "nb_actions": 29, "buts": 0, "tirs": 0, "passes": 29, "dribbles": 0}, "Mohamed Moufid": {"nom": "Mohamed Moufid", "equipe": "FAR Rabat", "xg": 0.0, "vaep": -0.0899, "nb_actions": 33, "buts": 0, "tirs": 0, "passes": 32, "dribbles": 1}, "Soumaila Ouatarra": {"nom": "Soumaila Ouatarra", "equipe": "FUS Rabat", "xg": 0.0, "vaep": 0.0064, "nb_actions": 17, "buts": 0, "tirs": 0, "passes": 17, "dribbles": 0}, "Saad Ait Khorsa": {"nom": "Saad Ait Khorsa", "equipe": "FUS Rabat", "xg": 0.0, "vaep": 0.0063, "nb_actions": 27, "buts": 0, "tirs": 0, "passes": 25, "dribbles": 2}, "Ayoub Qasmi": {"nom": "Ayoub Qasmi", "equipe": "FUS Rabat", "xg": 0.0, "vaep": 0.0053, "nb_actions": 20, "buts": 0, "tirs": 0, "passes": 20, "dribbles": 0}, "Mohamed Chibi": {"nom": "Mohamed Chibi", "equipe": "FAR Rabat", "xg": 0.0, "vaep": 0.0898, "nb_actions": 50, "buts": 0, "tirs": 0, "passes": 46, "dribbles": 4}, "Mahdi Benabid": {"nom": "Mahdi Benabid", "equipe": "FUS Rabat", "xg": 0.0, "vaep": 0.1731, "nb_actions": 26, "buts": 0, "tirs": 0, "passes": 26, "dribbles": 0}, "Brahim Sabaouni": {"nom": "Brahim Sabaouni", "equipe": "FAR Rabat", "xg": 0.0, "vaep": 0.0077, "nb_actions": 34, "buts": 0, "tirs": 0, "passes": 34, "dribbles": 0}, "Emmanuel Imanishimwe": {"nom": "Emmanuel Imanishimwe", "equipe": "FAR Rabat", "xg": 0.0, "vaep": 0.0016, "nb_actions": 23, "buts": 0, "tirs": 0, "passes": 23, "dribbles": 0}, "Zakaria Azoud": {"nom": "Zakaria Azoud", "equipe": "FUS Rabat", "xg": 0.008, "vaep": 0.019, "nb_actions": 12, "buts": 0, "tirs": 1, "passes": 8, "dribbles": 3}, "Abdou Atchabao": {"nom": "Abdou Atchabao", "equipe": "FAR Rabat", "xg": 0.0, "vaep": 0.0153, "nb_actions": 4, "buts": 0, "tirs": 0, "passes": 4, "dribbles": 0}, "Anis Mohamed Saltou": {"nom": "Anis Mohamed Saltou", "equipe": "FUS Rabat", "xg": 0.0, "vaep": 0.0835, "nb_actions": 1, "buts": 0, "tirs": 0, "passes": 1, "dribbles": 0}};
+const BUTS_DATA     = [{"joueur": "Reda Hajhouj", "equipe": "FUS Rabat", "minute": 37, "corps": "Right Foot", "xg": 0.797, "vaep": 0.1594}, {"joueur": "Edilson Alberto Monteiro Sanches Borges", "equipe": "FAR Rabat", "minute": 62, "corps": "Right Foot", "xg": 0.76, "vaep": 0.0}];
+const TIRS_DATA     = [{"joueur": "Reda Hajhouj", "equipe": "FUS Rabat", "minute": 37, "corps": "Right Foot", "resultat": "Goal", "xg": 0.797, "dxg": 0.797, "xt": 0.03, "dxt": -0.01, "vaep": 0.1594}, {"joueur": "Edilson Alberto Monteiro Sanches Borges", "equipe": "FAR Rabat", "minute": 62, "corps": "Right Foot", "resultat": "Goal", "xg": 0.76, "dxg": 0.0, "xt": 0.04, "dxt": -0.01, "vaep": 0.0}, {"joueur": "Anas Bach", "equipe": "FUS Rabat", "minute": 8, "corps": "Head", "resultat": "Off T", "xg": 0.341, "dxg": 0.341, "xt": 0.03, "dxt": -0.02, "vaep": 0.0853}, {"joueur": "Naoufel Zerhouni", "equipe": "FUS Rabat", "minute": 91, "corps": "Right Foot", "resultat": "Saved", "xg": 0.334, "dxg": 0.334, "xt": 0.05, "dxt": 0.0, "vaep": 0.0835}, {"joueur": "Abdelilah Amimi", "equipe": "FAR Rabat", "minute": 81, "corps": "Right Foot", "resultat": "Saved", "xg": 0.127, "dxg": 0.127, "xt": 0.03, "dxt": 0.0, "vaep": 0.0637}, {"joueur": "El Mehdi Karnass", "equipe": "FUS Rabat", "minute": 72, "corps": "Right Foot", "resultat": "Off T", "xg": 0.102, "dxg": 0.0, "xt": 0.03, "dxt": 0.01, "vaep": 0.0}, {"joueur": "Mohamed El Khaloui", "equipe": "FAR Rabat", "minute": 47, "corps": "Head", "resultat": "Off T", "xg": 0.091, "dxg": 0.091, "xt": 0.03, "dxt": -0.01, "vaep": 0.0151}, {"joueur": "Ismail Khafi", "equipe": "FAR Rabat", "minute": 81, "corps": "Right Foot", "resultat": "Blocked", "xg": 0.069, "dxg": 0.069, "xt": 0.04, "dxt": -0.01, "vaep": 0.0077}, {"joueur": "Naoufel Zerhouni", "equipe": "FUS Rabat", "minute": 7, "corps": "Right Foot", "resultat": "Off T", "xg": 0.051, "dxg": 0.051, "xt": 0.03, "dxt": -0.01, "vaep": 0.0064}, {"joueur": "Reda Hajhouj", "equipe": "FUS Rabat", "minute": 80, "corps": "Right Foot", "resultat": "Saved", "xg": 0.048, "dxg": 0.048, "xt": 0.04, "dxt": -0.01, "vaep": 0.0053}, {"joueur": "Mountassir Lahtimi", "equipe": "FUS Rabat", "minute": 28, "corps": "Left Foot", "resultat": "Off T", "xg": 0.047, "dxg": 0.047, "xt": 0.04, "dxt": 0.0, "vaep": -0.1059}, {"joueur": "Mohamed El Khaloui", "equipe": "FAR Rabat", "minute": 15, "corps": "Right Foot", "resultat": "Blocked", "xg": 0.043, "dxg": 0.043, "xt": 0.04, "dxt": 0.01, "vaep": 0.0142}, {"joueur": "Youssef Limouri", "equipe": "FUS Rabat", "minute": 2, "corps": "Left Foot", "resultat": "Off T", "xg": 0.041, "dxg": 0.041, "xt": 0.05, "dxt": -0.01, "vaep": 0.0059}, {"joueur": "Reda Hajhouj", "equipe": "FUS Rabat", "minute": 67, "corps": "Right Foot", "resultat": "Blocked", "xg": 0.038, "dxg": 0.038, "xt": 0.05, "dxt": 0.0, "vaep": 0.0063}, {"joueur": "Ismail Khafi", "equipe": "FAR Rabat", "minute": 26, "corps": "Left Foot", "resultat": "Off T", "xg": 0.036, "dxg": 0.036, "xt": 0.03, "dxt": 0.0, "vaep": 0.0071}, {"joueur": "Naoufel Zerhouni", "equipe": "FUS Rabat", "minute": 79, "corps": "Left Foot", "resultat": "Blocked", "xg": 0.028, "dxg": 0.028, "xt": 0.03, "dxt": 0.0, "vaep": 0.0035}, {"joueur": "Reda Hajhouj", "equipe": "FUS Rabat", "minute": 12, "corps": "Right Foot", "resultat": "Blocked", "xg": 0.015, "dxg": 0.015, "xt": 0.03, "dxt": 0.0, "vaep": 0.008}, {"joueur": "Mohamed El Khaloui", "equipe": "FAR Rabat", "minute": 49, "corps": "Right Foot", "resultat": "Off T", "xg": 0.013, "dxg": 0.013, "xt": 0.05, "dxt": 0.02, "vaep": 0.0008}, {"joueur": "El Mehdi Moubarik", "equipe": "FUS Rabat", "minute": 27, "corps": "Right Foot", "resultat": "Blocked", "xg": 0.01, "dxg": 0.01, "xt": 0.04, "dxt": 0.0, "vaep": 0.001}, {"joueur": "Anas Bach", "equipe": "FUS Rabat", "minute": 12, "corps": "Right Foot", "resultat": "Off T", "xg": 0.009, "dxg": 0.009, "xt": 0.04, "dxt": 0.01, "vaep": 0.008}, {"joueur": "Zakaria Azoud", "equipe": "FUS Rabat", "minute": 91, "corps": "Right Foot", "resultat": "Wayward", "xg": 0.008, "dxg": 0.008, "xt": 0.09, "dxt": 0.02, "vaep": 0.004}, {"joueur": "Reda Hajhouj", "equipe": "FUS Rabat", "minute": 14, "corps": "Right Foot", "resultat": "Off T", "xg": 0.008, "dxg": 0.008, "xt": 0.04, "dxt": 0.01, "vaep": 0.0039}];
+const TOP_POSS      = [{"num": 84, "equipe": "FUS Rabat", "nb_actions": 5, "vaep": 0.1594, "gagnee": true, "actions": [{"joueur": "Reda Hajhouj", "type": "Shot", "minute": 37, "resultat": "Goal", "xg": 0.797}, {"joueur": "Mahdi Benabid", "type": "Pass", "minute": 36, "resultat": "inconnu", "xg": 0.0}, {"joueur": "El Mehdi Moubarik", "type": "Pass", "minute": 36, "resultat": "inconnu", "xg": 0.0}, {"joueur": "El Mehdi Karnass", "type": "Pass", "minute": 36, "resultat": "inconnu", "xg": 0.0}, {"joueur": "Naoufel Zerhouni", "type": "Pass", "minute": 36, "resultat": "inconnu", "xg": 0.0}]}, {"num": 24, "equipe": "FUS Rabat", "nb_actions": 4, "vaep": 0.0853, "gagnee": true, "actions": [{"joueur": "Anas Bach", "type": "Shot", "minute": 8, "resultat": "Off T", "xg": 0.341}, {"joueur": "Mountassir Lahtimi", "type": "Pass", "minute": 8, "resultat": "inconnu", "xg": 0.0}, {"joueur": "El Mehdi Karnass", "type": "Pass", "minute": 8, "resultat": "inconnu", "xg": 0.0}, {"joueur": "Lahcen Dahdouh", "type": "Pass", "minute": 8, "resultat": "inconnu", "xg": 0.0}]}, {"num": 190, "equipe": "FUS Rabat", "nb_actions": 4, "vaep": 0.0835, "gagnee": true, "actions": [{"joueur": "Naoufel Zerhouni", "type": "Shot", "minute": 91, "resultat": "Saved", "xg": 0.334}, {"joueur": "El Mehdi Moubarik", "type": "Pass", "minute": 91, "resultat": "inconnu", "xg": 0.0}, {"joueur": "El Mehdi Karnass", "type": "Pass", "minute": 91, "resultat": "inconnu", "xg": 0.0}, {"joueur": "Anis Mohamed Saltou", "type": "Pass", "minute": 91, "resultat": "inconnu", "xg": 0.0}]}, {"num": 169, "equipe": "FAR Rabat", "nb_actions": 2, "vaep": 0.0637, "gagnee": true, "actions": [{"joueur": "Abdelilah Amimi", "type": "Shot", "minute": 81, "resultat": "Saved", "xg": 0.127}, {"joueur": "Mohamed Chibi", "type": "Pass", "minute": 81, "resultat": "Incomplete", "xg": 0.0}]}, {"num": 107, "equipe": "FAR Rabat", "nb_actions": 6, "vaep": 0.0151, "gagnee": true, "actions": [{"joueur": "Mohamed El Khaloui", "type": "Shot", "minute": 47, "resultat": "Off T", "xg": 0.091}, {"joueur": "Omar Jerrari", "type": "Pass", "minute": 47, "resultat": "inconnu", "xg": 0.0}, {"joueur": "Anouar Tarkhatt", "type": "Pass", "minute": 47, "resultat": "inconnu", "xg": 0.0}, {"joueur": "Edilson Alberto Monteiro Sanches Borges", "type": "Pass", "minute": 47, "resultat": "inconnu", "xg": 0.0}, {"joueur": "Mohamed Moufid", "type": "Pass", "minute": 47, "resultat": "inconnu", "xg": 0.0}, {"joueur": "Mohamed Chibi", "type": "Pass", "minute": 47, "resultat": "inconnu", "xg": 0.0}]}, {"num": 40, "equipe": "FAR Rabat", "nb_actions": 3, "vaep": 0.0142, "gagnee": true, "actions": [{"joueur": "Mohamed El Khaloui", "type": "Shot", "minute": 15, "resultat": "Blocked", "xg": 0.043}, {"joueur": "Ismail Khafi", "type": "Pass", "minute": 15, "resultat": "inconnu", "xg": 0.0}, {"joueur": "Zakaria Fati", "type": "Pass", "minute": 15, "resultat": "inconnu", "xg": 0.0}]}, {"num": 32, "equipe": "FUS Rabat", "nb_actions": 3, "vaep": 0.008, "gagnee": true, "actions": [{"joueur": "Reda Hajhouj", "type": "Shot", "minute": 12, "resultat": "Blocked", "xg": 0.015}, {"joueur": "Naoufel Zerhouni", "type": "Pass", "minute": 12, "resultat": "inconnu", "xg": 0.0}, {"joueur": "Anas Bach", "type": "Shot", "minute": 12, "resultat": "Off T", "xg": 0.009}]}, {"num": 168, "equipe": "FAR Rabat", "nb_actions": 9, "vaep": 0.0077, "gagnee": true, "actions": [{"joueur": "Ismail Khafi", "type": "Shot", "minute": 81, "resultat": "Blocked", "xg": 0.069}, {"joueur": "Ayoub Lakred", "type": "Pass", "minute": 80, "resultat": "inconnu", "xg": 0.0}, {"joueur": "Abdelilah Amimi", "type": "Pass", "minute": 80, "resultat": "inconnu", "xg": 0.0}, {"joueur": "Abdou Atchabao", "type": "Pass", "minute": 80, "resultat": "inconnu", "xg": 0.0}, {"joueur": "Brahim Sabaouni", "type": "Pass", "minute": 80, "resultat": "inconnu", "xg": 0.0}, {"joueur": "Abdelilah Amimi", "type": "Pass", "minute": 80, "resultat": "inconnu", "xg": 0.0}, {"joueur": "Abdou Atchabao", "type": "Pass", "minute": 81, "resultat": "inconnu", "xg": 0.0}, {"joueur": "Hamza Moujahid", "type": "Pass", "minute": 81, "resultat": "inconnu", "xg": 0.0}, {"joueur": "Mohamed Chibi", "type": "Pass", "minute": 81, "resultat": "inconnu", "xg": 0.0}]}, {"num": 67, "equipe": "FAR Rabat", "nb_actions": 5, "vaep": 0.0071, "gagnee": true, "actions": [{"joueur": "Ismail Khafi", "type": "Shot", "minute": 26, "resultat": "Off T", "xg": 0.036}, {"joueur": "Mohamed Rabie Hrimat", "type": "Pass", "minute": 26, "resultat": "inconnu", "xg": 0.0}, {"joueur": "Zakaria Fati", "type": "Pass", "minute": 26, "resultat": "inconnu", "xg": 0.0}, {"joueur": "Hamza Moujahid", "type": "Pass", "minute": 26, "resultat": "inconnu", "xg": 0.0}, {"joueur": "Mohamed El Khaloui", "type": "Pass", "minute": 26, "resultat": "Incomplete", "xg": 0.0}]}, {"num": 20, "equipe": "FUS Rabat", "nb_actions": 8, "vaep": 0.0064, "gagnee": true, "actions": [{"joueur": "Naoufel Zerhouni", "type": "Shot", "minute": 7, "resultat": "Off T", "xg": 0.051}, {"joueur": "Mahdi Benabid", "type": "Pass", "minute": 6, "resultat": "inconnu", "xg": 0.0}, {"joueur": "El Mehdi Moubarik", "type": "Pass", "minute": 6, "resultat": "inconnu", "xg": 0.0}, {"joueur": "Soumaila Ouatarra", "type": "Pass", "minute": 6, "resultat": "inconnu", "xg": 0.0}, {"joueur": "El Mehdi Karnass", "type": "Pass", "minute": 7, "resultat": "inconnu", "xg": 0.0}, {"joueur": "Mountassir Lahtimi", "type": "Pass", "minute": 7, "resultat": "inconnu", "xg": 0.0}, {"joueur": "Youssef Limouri", "type": "Pass", "minute": 7, "resultat": "inconnu", "xg": 0.0}, {"joueur": "Lahcen Dahdouh", "type": "Pass", "minute": 7, "resultat": "inconnu", "xg": 0.0}]}];
+const NB_POSSESSIONS = 187;
+
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const fus = EQUIPES_STATS[NOM_FUS];
+  const far = EQUIPES_STATS[NOM_FAR];
+
+  // Header
+  document.getElementById('nameFus').textContent = NOM_FUS;
+  document.getElementById('nameFar').textContent = NOM_FAR;
+  document.getElementById('titleFus').textContent = NOM_FUS;
+  document.getElementById('titleFar').textContent = NOM_FAR;
+  document.getElementById('badgeFus').textContent = NOM_FUS.split(' ')[0].substring(0,3).toUpperCase();
+  document.getElementById('badgeFar').textContent = NOM_FAR.split(' ')[0].substring(0,3).toUpperCase();
+  document.getElementById('scoreFus').textContent = fus.buts;
+  document.getElementById('scoreFar').textContent = far.buts;
+  document.getElementById('matchInfo').textContent = `${NOM_FUS}  ${fus.buts} — ${far.buts}  ${NOM_FAR}`;
+  document.getElementById('statPoss').textContent = NB_POSSESSIONS;
+  document.getElementById('statTirs').textContent = TIRS_DATA.length;
+  document.getElementById('statJoueurs').textContent = JOUEURS_FUS.length + JOUEURS_FAR.length;
+  document.getElementById('statActions').textContent = Object.values(TOUS_JOUEURS).reduce((s,j)=>s+j.nb_actions,0);
+
+  buildPlayerCards('playersFus', JOUEURS_FUS, 'fus');
+  buildPlayerCards('playersFar', JOUEURS_FAR, 'far');
+  buildButs();
+  buildTirs();
+  buildPossessions();
+  buildCompare();
+  buildEquipes();
+});
+
+// ── NAVIGATION ─────────────────────────────────────────────────────────────
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ── PLAYER CARDS ────────────────────────────────────────────────────────────
+function initials(name) {
+  return name.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+}
+
+function vaepColor(v) {
+  if (v > 0.01)  return '#00e676';
+  if (v < -0.5)  return '#ff5252';
+  if (v < -0.1)  return '#ff9100';
+  return '#8899bb';
+}
+
+function xgColor(v) {
+  if (v > 0.5)  return '#ffd600';
+  if (v > 0.1)  return '#ffab40';
+  if (v > 0.01) return '#40c4ff';
+  return '#8899bb';
+}
+
+function buildPlayerCards(containerId, players, side) {
+  const cont = document.getElementById(containerId);
+  cont.innerHTML = '';
+  players.forEach(p => {
+    const card = document.createElement('div');
+    card.className = `player-card ${side}`;
+    card.onclick = () => showPlayerDetail(p.nom, card);
+
+    const vaepC = vaepColor(p.vaep);
+    const xgC   = xgColor(p.xg);
+
+    card.innerHTML = `
+      <div class="player-card-top">
+        <div class="player-avatar avatar-${side}">${initials(p.nom)}</div>
+        <div class="player-info">
+          <div class="player-name">${p.nom}</div>
+          <div class="player-pos">${p.equipe} · ${p.nb_actions} actions</div>
+        </div>
+        <div class="player-xg-badge" style="color:${xgC};border-color:${xgC}40">xG ${p.xg.toFixed(3)}</div>
+      </div>
+      <div class="player-stats-row">
+        <div class="mini-stat">
+          <div class="mini-stat-val" style="color:${vaepC}">${p.vaep.toFixed(3)}</div>
+          <div class="mini-stat-lbl">VAEP</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-val" style="color:#ffd600">${p.buts}</div>
+          <div class="mini-stat-lbl">Buts</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-val" style="color:#40c4ff">${p.tirs}</div>
+          <div class="mini-stat-lbl">Tirs</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-val" style="color:#8899bb">${p.passes}</div>
+          <div class="mini-stat-lbl">Passes</div>
+        </div>
+      </div>`;
+    cont.appendChild(card);
+  });
+}
+
+// ── PLAYER DETAIL ────────────────────────────────────────────────────────────
+let selectedCard = null;
+function showPlayerDetail(nom, card) {
+  if (selectedCard) selectedCard.classList.remove('selected');
+  if (selectedCard === card) {
+    selectedCard = null;
+    document.getElementById('detailPanel').classList.remove('show');
+    return;
+  }
+  selectedCard = card;
+  card.classList.add('selected');
+
+  const p = TOUS_JOUEURS[nom];
+  const side = p.equipe === NOM_FUS ? 'fus' : 'far';
+  const vaepC = vaepColor(p.vaep);
+  const xgC   = xgColor(p.xg);
+
+  const panel = document.getElementById('detailPanel');
+  const avatar = document.getElementById('detailAvatar');
+  avatar.className = `detail-avatar avatar-${side}`;
+  avatar.style.width = '64px';
+  avatar.style.height = '64px';
+  avatar.style.fontSize = '24px';
+  avatar.style.fontFamily = "'Oswald', sans-serif";
+  avatar.style.fontWeight = '700';
+  avatar.textContent = initials(nom);
+  if (side==='fus') {
+    avatar.style.background='rgba(0,230,118,.15)';
+    avatar.style.color='var(--fus-light)';
+    avatar.style.border='2px solid rgba(0,230,118,.4)';
+  } else {
+    avatar.style.background='rgba(255,82,82,.15)';
+    avatar.style.color='var(--far-light)';
+    avatar.style.border='2px solid rgba(255,82,82,.4)';
+  }
+
+  document.getElementById('detailName').textContent = nom;
+  document.getElementById('detailSub').textContent  = p.equipe + ' · ' + p.nb_actions + ' actions analysées';
+
+  const metrics = [
+    {lbl:'XG',      val: p.xg.toFixed(4),   col: xgC},
+    {lbl:'VAEP',    val: p.vaep.toFixed(4),  col: vaepC},
+    {lbl:'Buts',    val: p.buts,             col:'#ffd600'},
+    {lbl:'Tirs',    val: p.tirs,             col:'#40c4ff'},
+    {lbl:'Passes',  val: p.passes,           col:'#8899bb'},
+  ];
+  document.getElementById('detailMetrics').innerHTML = metrics.map(m => `
+    <div class="metric-box">
+      <div class="metric-val" style="color:${m.col}">${m.val}</div>
+      <div class="metric-lbl">${m.lbl}</div>
+    </div>`).join('');
+
+  // Actions du joueur depuis TIRS_DATA + filtrage
+  const rows = TIRS_DATA.filter(a => a.joueur === nom);
+  // Aussi afficher passes et dribbles depuis TOP_POSS
+  const allActs = [];
+  TOP_POSS.forEach(poss => {
+    poss.actions.forEach(a => {
+      if (a.joueur === nom) allActs.push({...a, vaep:poss.vaep, dxg:0, xt:0, dxt:0});
+    });
+  });
+
+  const displayRows = rows.length > 0 ? rows : allActs.slice(0,10);
+  document.getElementById('detailActionsBody').innerHTML = displayRows.length === 0
+    ? '<tr><td colspan="9" style="text-align:center;color:var(--grey);padding:20px">Aucun tir enregistré</td></tr>'
+    : displayRows.map(a => `
+      <tr class="${a.resultat==='Goal'?'goal-row':''}">
+        <td>${a.minute}'</td>
+        <td><span class="chip-type chip-${a.resultat==='Goal'?'Goal':a.type||'Pass'}">${a.resultat==='Goal'?'⚽ GOAL':a.type||'Pass'}</span></td>
+        <td>${a.corps||'—'}</td>
+        <td>${a.resultat}</td>
+        <td style="color:${xgColor(a.xg||0)};font-weight:600">${(a.xg||0).toFixed(3)}</td>
+        <td>${(a.dxg||0).toFixed(3)}</td>
+        <td>${(a.xt||0).toFixed(4)}</td>
+        <td>${(a.dxt||0).toFixed(4)}</td>
+        <td style="color:${vaepColor(a.vaep||0)};font-weight:600">${(a.vaep||0).toFixed(4)}</td>
+      </tr>`).join('');
+
+  panel.classList.add('show');
+  panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+// ── BUTS ──────────────────────────────────────────────────────────────────────
+function buildButs() {
+  const tl = document.getElementById('goalTimeline');
+  if (BUTS_DATA.length === 0) {
+    tl.innerHTML = '<p style="color:var(--grey)">Aucun but trouvé.</p>';
+    return;
+  }
+  tl.innerHTML = BUTS_DATA.map(b => {
+    const isFus = b.equipe === NOM_FUS;
+    return `
+    <div class="goal-item">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div class="goal-min">${b.minute}'</div>
+          <div class="goal-player" style="color:${isFus?'var(--fus-light)':'var(--far-light)'}">${b.joueur}</div>
+          <div style="font-size:13px;color:var(--grey);margin-top:4px">${b.equipe} · ${b.corps}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-family:'Oswald',sans-serif;font-size:28px;font-weight:700;color:var(--gold)">
+            xG ${b.xg.toFixed(3)}
+          </div>
+          <div style="font-size:12px;color:var(--grey)">VAEP ${b.vaep.toFixed(4)}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Barres comparaison
+  const fus = EQUIPES_STATS[NOM_FUS];
+  const far = EQUIPES_STATS[NOM_FAR];
+  const bars = [
+    {lbl:'Buts',   fusV:fus.buts,   farV:far.buts,   max:Math.max(fus.buts,far.buts,1)},
+    {lbl:'XG',     fusV:fus.xg_total,farV:far.xg_total,max:Math.max(fus.xg_total,far.xg_total,.1)},
+    {lbl:'Tirs',   fusV:fus.tirs,   farV:far.tirs,   max:Math.max(fus.tirs,far.tirs,1)},
+    {lbl:'Passes', fusV:fus.passes, farV:far.passes, max:Math.max(fus.passes,far.passes,1)},
+  ];
+  document.getElementById('teamBarsContainer').innerHTML = bars.map(b => `
+    <div class="bar-row" style="margin-bottom:16px">
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+        <span style="font-family:'Oswald',sans-serif;font-size:15px;font-weight:600;color:var(--fus-light)">${typeof b.fusV==='number'&&b.fusV%1!==0?b.fusV.toFixed(2):b.fusV}</span>
+        <div class="bar-fus" style="width:${Math.round(b.fusV/b.max*100)}%;min-width:4px"></div>
+      </div>
+      <div class="bar-label">${b.lbl}</div>
+      <div style="display:flex;flex-direction:column;align-items:flex-start;gap:4px">
+        <span style="font-family:'Oswald',sans-serif;font-size:15px;font-weight:600;color:var(--far-light)">${typeof b.farV==='number'&&b.farV%1!==0?b.farV.toFixed(2):b.farV}</span>
+        <div class="bar-far" style="width:${Math.round(b.farV/b.max*100)}%;min-width:4px"></div>
+      </div>
+    </div>`).join('');
+}
+
+// ── TIRS ──────────────────────────────────────────────────────────────────────
+function buildTirs() {
+  document.getElementById('tirsBody').innerHTML = TIRS_DATA.map((t,i) => `
+    <tr class="${t.resultat==='Goal'?'goal-row':''}">
+      <td style="color:var(--grey)">${i+1}</td>
+      <td style="font-weight:600">${t.joueur}</td>
+      <td style="color:${t.equipe===NOM_FUS?'var(--fus-light)':'var(--far-light)'}">${t.equipe}</td>
+      <td>${t.minute}'</td>
+      <td>${t.corps}</td>
+      <td><span class="chip-type chip-${t.resultat==='Goal'?'Goal':'Pass'}">${t.resultat}</span></td>
+      <td style="color:${xgColor(t.xg)};font-weight:700">${t.xg.toFixed(3)}</td>
+      <td style="color:${t.dxg>0?'var(--green)':t.dxg<0?'var(--red)':'var(--grey)'}">${t.dxg>0?'+':''}${t.dxg.toFixed(3)}</td>
+      <td>${t.xt.toFixed(4)}</td>
+      <td style="color:${t.dxt>0?'var(--green)':t.dxt<0?'var(--red)':'var(--grey)'}">${t.dxt>0?'+':''}${t.dxt.toFixed(4)}</td>
+      <td style="color:${vaepColor(t.vaep)};font-weight:600">${t.vaep>0?'+':''}${t.vaep.toFixed(4)}</td>
+    </tr>`).join('');
+}
+
+// ── POSSESSIONS ───────────────────────────────────────────────────────────────
+function buildPossessions() {
+  document.getElementById('possessionsList').innerHTML = TOP_POSS.map(p => {
+    const vaepClass = p.vaep > 0.01 ? 'vaep-pos' : p.vaep < -0.01 ? 'vaep-neg' : 'vaep-neu';
+    const isFus = p.equipe === NOM_FUS;
+    const chips = p.actions.map(a => {
+      const isGoal = a.resultat === 'Goal';
+      const cls = isGoal ? 'chip-goal' : `chip-${a.type.toLowerCase().substring(0,4) === 'pass' ? 'pass' : a.type.toLowerCase().substring(0,4) === 'shot' ? 'shot' : 'drib'}`;
+      return `<span class="act-chip ${cls}">${isGoal?'⚽ GOAL ':a.type} ${a.minute}'</span>`;
+    }).join('');
+    return `
+    <div class="poss-card">
+      <div class="poss-header">
+        <div>
+          <span class="poss-num">Possession #${p.num}</span>
+          <span style="font-size:12px;color:${isFus?'var(--fus-light)':'var(--far-light)'};margin-left:10px">${p.equipe}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:12px;color:var(--grey)">${p.nb_actions} actions</span>
+          <span class="vaep-badge ${vaepClass}">${p.vaep>0?'+':''}${p.vaep.toFixed(4)}</span>
+        </div>
+      </div>
+      <div class="poss-actions">${chips}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── COMPARER ──────────────────────────────────────────────────────────────────
+function buildCompare() {
+  const allNames = Object.keys(TOUS_JOUEURS).sort();
+  ['compareJ1','compareJ2'].forEach((id,i) => {
+    const sel = document.getElementById(id);
+    sel.innerHTML = allNames.map(n => `<option value="${n}">${n}</option>`).join('');
+    sel.selectedIndex = i;
+  });
+  updateCompare();
+}
+
+function updateCompare() {
+  const n1 = document.getElementById('compareJ1').value;
+  const n2 = document.getElementById('compareJ2').value;
+  if (!n1 || !n2 || n1 === n2) return;
+  const j1 = TOUS_JOUEURS[n1];
+  const j2 = TOUS_JOUEURS[n2];
+  const metrics = [
+    {lbl:'XG',      v1:j1.xg,        v2:j2.xg,        higher:true,  fmt:(v)=>v.toFixed(4)},
+    {lbl:'VAEP',    v1:j1.vaep,      v2:j2.vaep,      higher:true,  fmt:(v)=>v.toFixed(4)},
+    {lbl:'Buts',    v1:j1.buts,      v2:j2.buts,      higher:true,  fmt:(v)=>v},
+    {lbl:'Tirs',    v1:j1.tirs,      v2:j2.tirs,      higher:true,  fmt:(v)=>v},
+    {lbl:'Passes',  v1:j1.passes,    v2:j2.passes,    higher:true,  fmt:(v)=>v},
+    {lbl:'Dribbles',v1:j1.dribbles,  v2:j2.dribbles,  higher:true,  fmt:(v)=>v},
+    {lbl:'Actions', v1:j1.nb_actions,v2:j2.nb_actions, higher:true,  fmt:(v)=>v},
+  ];
+
+  const isFus1 = j1.equipe === NOM_FUS;
+  const isFus2 = j2.equipe === NOM_FUS;
+  const c1 = isFus1 ? 'var(--fus-light)' : 'var(--far-light)';
+  const c2 = isFus2 ? 'var(--fus-light)' : 'var(--far-light)';
+
+  const res = document.getElementById('compareResult');
+  res.classList.add('show');
+  res.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:12px;margin-bottom:16px">
+      <div style="text-align:center">
+        <div style="font-family:'Oswald',sans-serif;font-size:18px;font-weight:700;color:${c1}">${n1}</div>
+        <div style="font-size:12px;color:var(--grey)">${j1.equipe}</div>
+      </div>
+      <div style="font-family:'Oswald',sans-serif;font-size:20px;color:var(--grey);text-align:center;line-height:2">VS</div>
+      <div style="text-align:center">
+        <div style="font-family:'Oswald',sans-serif;font-size:18px;font-weight:700;color:${c2}">${n2}</div>
+        <div style="font-size:12px;color:var(--grey)">${j2.equipe}</div>
+      </div>
+    </div>
+    ${metrics.map(m => {
+      const w1 = m.higher ? m.v1 > m.v2 : m.v1 < m.v2;
+      const w2 = m.higher ? m.v2 > m.v1 : m.v2 < m.v1;
+      return `
+      <div class="compare-row">
+        <div class="compare-val left ${w1?'winner':''}" style="color:${w1?'var(--green)':c1}">${m.fmt(m.v1)}</div>
+        <div class="compare-metric-name">${m.lbl}</div>
+        <div class="compare-val ${w2?'winner':''}" style="color:${w2?'var(--green)':c2}">${m.fmt(m.v2)}</div>
+      </div>`;
+    }).join('')}
+    <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);text-align:center;font-family:'Oswald',sans-serif;font-size:14px;color:var(--green)">
+      ${j1.vaep > j2.vaep ? '✓ ' + n1 + ' a un meilleur VAEP' : j2.vaep > j1.vaep ? '✓ ' + n2 + ' a un meilleur VAEP' : '= VAEP identique'}
+    </div>`;
+}
+
+// ── ÉQUIPES ────────────────────────────────────────────────────────────────────
+function buildEquipes() {
+  const fus = EQUIPES_STATS[NOM_FUS];
+  const far = EQUIPES_STATS[NOM_FAR];
+  const metrics = [
+    {lbl:'VAEP Total',   fusV:fus.vaep_total,  farV:far.vaep_total,  fmt:(v)=>v.toFixed(3)},
+    {lbl:'XG Total',     fusV:fus.xg_total,    farV:far.xg_total,    fmt:(v)=>v.toFixed(3)},
+    {lbl:'Buts',         fusV:fus.buts,         farV:far.buts,         fmt:(v)=>v},
+    {lbl:'Tirs',         fusV:fus.tirs,         farV:far.tirs,         fmt:(v)=>v},
+    {lbl:'Passes',       fusV:fus.passes,       farV:far.passes,       fmt:(v)=>v},
+    {lbl:'Joueurs',      fusV:fus.nb_joueurs,   farV:far.nb_joueurs,   fmt:(v)=>v},
+  ];
+  document.getElementById('equipesContent').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-bottom:24px">
+      <div style="text-align:center;padding:20px;background:var(--card);border:1px solid rgba(0,230,118,.3);border-radius:10px">
+        <div style="font-family:'Oswald',sans-serif;font-size:28px;font-weight:700;color:var(--fus-light)">${NOM_FUS}</div>
+        <div style="font-size:48px;font-family:'Oswald',sans-serif;font-weight:700;color:var(--fus-light);text-shadow:0 0 30px var(--fus-light)">${fus.buts}</div>
+        <div style="color:var(--grey);font-size:13px">Buts marqués</div>
+      </div>
+      <div style="font-family:'Oswald',sans-serif;font-size:24px;color:var(--grey);text-align:center">—</div>
+      <div style="text-align:center;padding:20px;background:var(--card);border:1px solid rgba(255,82,82,.3);border-radius:10px">
+        <div style="font-family:'Oswald',sans-serif;font-size:28px;font-weight:700;color:var(--far-light)">${NOM_FAR}</div>
+        <div style="font-size:48px;font-family:'Oswald',sans-serif;font-weight:700;color:var(--far-light);text-shadow:0 0 30px var(--far-light)">${far.buts}</div>
+        <div style="color:var(--grey);font-size:13px">Buts marqués</div>
+      </div>
+    </div>
+    ${metrics.map(m => {
+      const max = Math.max(Math.abs(m.fusV), Math.abs(m.farV), 0.001);
+      const pFus = Math.round(Math.abs(m.fusV)/max*100);
+      const pFar = Math.round(Math.abs(m.farV)/max*100);
+      return `
+      <div class="bar-row" style="margin-bottom:20px">
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <span style="font-family:'Oswald',sans-serif;font-size:17px;font-weight:700;color:var(--fus-light)">${m.fmt(m.fusV)}</span>
+          <div class="bar-fus" style="width:${pFus}%;min-width:4px;height:10px"></div>
+        </div>
+        <div class="bar-label" style="font-size:12px">${m.lbl}</div>
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px">
+          <span style="font-family:'Oswald',sans-serif;font-size:17px;font-weight:700;color:var(--far-light)">${m.fmt(m.farV)}</span>
+          <div class="bar-far" style="width:${pFar}%;min-width:4px;height:10px"></div>
+        </div>
+      </div>`;
+    }).join('')}`;
+}
+</script>
+</body>
+</html>
